@@ -1,11 +1,13 @@
 """
 Prediction de la survie d'un individu sur le Titanic
 """
+import os
+import argparse
 
+from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-
 from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -14,11 +16,18 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import confusion_matrix
 
-N_TREES = 20
+load_dotenv()
+
+parser = argparse.ArgumentParser(description="Paramètres du random forest")
+parser.add_argument(
+    "--n_trees", type=int, default=20, help="Nombre d'arbres"
+)
+args = parser.parse_args()
+
+N_TREES = args.n_trees
 MAX_DEPTH = None
 MAX_FEATURES = "sqrt"
-JETON_API = "$trotskitueleski1917"
-
+JETON_API = os.environ["JETON_API"]
 
 # IMPORT ET EXPLORATION DONNEES --------------------------------
 
